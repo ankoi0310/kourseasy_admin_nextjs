@@ -3,11 +3,11 @@
 import CourseRegistrationForm from '@/app/dkmh/course-registration-form'
 import LoginForm from '@/app/dkmh/login-form'
 import { Typography } from '@/components/ui/typography'
-import { HttpResponse } from '@/lib/types'
+import { CourseRegistrationResult } from '@/lib/types'
 import React from 'react'
 
 const DKMH = () => {
-  const [courseRegistrationResult, setCourseRegistrationResult] = React.useState<HttpResponse<CourseRegistrationResult>[]>([])
+  const [courseRegistrationResult, setCourseRegistrationResult] = React.useState<CourseRegistrationResult[]>([])
   
   return (
     <div className={'flex flex-col justify-start gap-8 p-6'}>
