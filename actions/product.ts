@@ -8,8 +8,7 @@ export const getProducts = (setProducts: (products: Product[]) => void) => {
   return onSnapshot(productRef, (snapshot) => {
     const products = snapshot.docs.map((doc) => doc.data()) as Product[]
     setProducts(products)
-  }, (error) => {
-    console.log(error)
+  }, (_) => {
     setProducts([])
   })
 }

@@ -99,3 +99,14 @@ export const expirationStatuses = [
     icon: XCircle,
   },
 ]
+
+export const errorMessages: { [key: number]: string } = {
+  400: 'Your request is invalid',
+  401: 'You are not authenticated',
+  403: 'You are not authorized to access this resource',
+  404: 'The requested resource was not found',
+  500: 'Internal server error',
+  502: 'Bad gateway',
+  503: 'Service unavailable',
+  504: 'Gateway timeout',
+}

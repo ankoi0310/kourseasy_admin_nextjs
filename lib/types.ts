@@ -3,21 +3,21 @@ import { LucideIcon } from 'lucide-react'
 import { z } from 'zod'
 
 export type SidebarItem = {
-  title: string;
-  items: NavItem[];
+  title: string
+  items: NavItem[]
 }
 
 export type NavItem = {
-  title: string;
-  path: string;
-  icon?: LucideIcon;
+  title: string
+  path: string
+  icon?: LucideIcon
 }
 
 export type AppResponse = {
-  success: boolean;
-  code: number;
-  message: string;
-  data?: any;
+  success: boolean
+  code: number
+  message: string
+  data?: any
 }
 
 export type HttpResponse<T> = {
@@ -27,9 +27,9 @@ export type HttpResponse<T> = {
 }
 
 export type Status = {
-  value: boolean;
-  label: string;
-  icon?: LucideIcon;
+  value: boolean
+  label: string
+  icon?: LucideIcon
 }
 
 export const userSchema = z.object({
@@ -96,21 +96,21 @@ export const userLoginRequestSchema = z.object({
 export type UserLoginRequest = z.infer<typeof userLoginRequestSchema>
 
 export type UserLoginResponse = {
-  access_token: string;
-  token_type: string;
-  expires_in: number;
-  refresh_token: string;
-  userName: string;
-  id: string;
-  logtime: string;
-  code: string;
-  result: string;
-  passtype: string;
-  name: string;
-  principal: string;
-  wcf: string;
-  '.expires': string;
-  '.issued': string;
+  access_token: string
+  token_type: string
+  expires_in: number
+  refresh_token: string
+  userName: string
+  id: string
+  logtime: string
+  code: string
+  result: string
+  passtype: string
+  name: string
+  principal: string
+  wcf: string
+  '.expires': string
+  '.issued': string
 }
 
 export const courseRegisterRequestSchema = z.object({
@@ -122,6 +122,10 @@ export const courseRegisterRequestSchema = z.object({
 export type CourseRegisterRequest = z.infer<typeof courseRegisterRequestSchema>
 
 export type CourseRegistrationResult = {
-  isThanhCong: boolean;
-  thongBaoLoi: string;
+  is_thanh_cong: boolean
+  thong_bao_loi: string
+}
+
+export type CourseRegistrationMapping = {
+  [id: string]: CourseRegistrationResult
 }

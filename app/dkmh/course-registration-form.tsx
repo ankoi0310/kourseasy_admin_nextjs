@@ -5,19 +5,20 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '
 import { Textarea } from '@/components/ui/textarea'
 import { Typography } from '@/components/ui/typography'
 import { useToast } from '@/components/ui/use-toast'
-import { CourseRegisterRequest, courseRegisterRequestSchema, CourseRegistrationResult } from '@/lib/types'
+import { CourseRegisterRequest, courseRegisterRequestSchema, CourseRegistrationMapping } from '@/lib/types'
 import { isLoggedIn, cn } from '@/lib/utils'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { X } from 'lucide-react'
+import { Loader2, X } from 'lucide-react'
 import React, { Dispatch, SetStateAction } from 'react'
 import { useForm } from 'react-hook-form'
 
 type CourseRegistrationFormProps = React.HTMLAttributes<HTMLDivElement> & {
-  setCourseRegistrationResult: Dispatch<SetStateAction<CourseRegistrationResult[]>>
+  setCourseRegistrationMapping: Dispatch<SetStateAction<CourseRegistrationMapping>>
 }
 
-const CourseRegistrationForm = ({ className, setCourseRegistrationResult }: CourseRegistrationFormProps) => {
+const CourseRegistrationForm = ({ className, setCourseRegistrationMapping }: CourseRegistrationFormProps) => {
   const { toast } = useToast()
+  const [loading, setLoading] = React.useState(false)
   const form = useForm<CourseRegisterRequest>({
     resolver: zodResolver(courseRegisterRequestSchema),
   })
@@ -41,27 +42,22 @@ const CourseRegistrationForm = ({ className, setCourseRegistrationResult }: Cour
       return
     }
     
+    setLoading(true)
+    
+    const accessToken = localStorage.getItem('access_token')
     const ids = values.courseIdStr.trim().split(',').map((id) => id.trim())
     
     for (const id of ids) {
-      try {
-        registerCourse(id).then((courseRegistrationResult) => {
-          setCourseRegistrationResult((prev) => {
-            return [
-              ...prev,
-              courseRegistrationResult
-            ]
-          })
-        })
-      } catch (error) {
-        setCourseRegistrationResult((prev) => {
-          return [...prev, {
-            isThanhCong: false,
-            thongBaoLoi: 'Lỗi không xác định'
-          }]
-        })
-      }
+      if (id === '') continue
+      registerCourse(id, accessToken!).then((courseRegistrationResult) => {
+        setCourseRegistrationMapping((prev) => ({
+          ...prev,
+          [id]: courseRegistrationResult,
+        }))
+      })
     }
+    
+    setLoading(false)
   }
   
   return (
@@ -90,7 +86,19 @@ const CourseRegistrationForm = ({ className, setCourseRegistrationResult }: Cour
             />
           </CardContent>
           <CardFooter className={'justify-end'}>
-            <Button>Submit</Button>
+            <Button>
+              {
+                loading ? (
+                  <Loader2
+                    size={16}
+                    strokeWidth={2}
+                    className={'animate-spin'}
+                  />
+                ) : (
+                  <span>Register</span>
+                )
+              }
+            </Button>
           </CardFooter>
         </form>
       </Form>
