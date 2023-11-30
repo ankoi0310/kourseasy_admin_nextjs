@@ -1,6 +1,7 @@
 import Header from '@/components/layout/header'
 import SideNav from '@/components/layout/side-nav'
 import { Toaster } from '@/components/ui/toaster'
+import { Analytics } from '@vercel/analytics/react'
 import type { Metadata } from 'next'
 import { Montserrat } from 'next/font/google'
 import './globals.css'
@@ -29,6 +30,7 @@ export default function RootLayout({
             <div className={'col-span-12 xl:col-span-10'}>
               {children}
             </div>
+            <Analytics />
           </div>
         </div>
         <Toaster />
